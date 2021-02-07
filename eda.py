@@ -87,3 +87,16 @@ def target_summary_with_cat(dataframe, target, categorical_col):
 
 def target_summary_with_num(dataframe, target, numerical_col):
     print(dataframe.groupby(target).agg({numerical_col: "mean"}), end="\n\n\n")
+
+
+#############################################
+# THRESHOLDS
+#############################################
+
+def outlier_thresholds(dataframe, variable):
+    quartile1 = dataframe[variable].quantile(0.05)
+    quartile3 = dataframe[variable].quantile(0.95)
+    interquantile_range = quartile3 - quartile1
+    up_limit = quartile3 + 1.5 * interquantile_range
+    low_limit = quartile1 - 1.5 * interquantile_range
+    return low_limit, up_limit
